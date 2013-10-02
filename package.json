@@ -1,0 +1,10 @@
+{
+  "name": "dijitwd",
+  "version": "0.0.0",
+  "description": "Remote dijit via WebDriver",
+  "author": "Ben Hockey",
+  "license": "BSD",
+  "devDependencies": {
+    "intern": "~1.2.1"
+  }
+}
