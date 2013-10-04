@@ -1,12 +1,11 @@
 define([
 	'intern!object',
 	'intern/chai!assert',
-	'../../lib/RemoteRegistry',
-	'../../lib/RemoteWidget'
-], function (test, assert, RemoteRegistry, RemoteWidget) {
+	'../../lib/RemoteRegistry'
+], function (test, assert, RemoteRegistry) {
 
 	var registry,
-		DIALOG_TEST_URL = 'http://download.dojotoolkit.org/release-1.9.1/dojo-release-1.9.1/dijit/tests/test_Dialog.html';
+		TEST_URL = 'http://download.dojotoolkit.org/release-1.9.1/dojo-release-1.9.1/dijit/tests/test_Dialog.html';
 
 	return test({
 		name: 'RemoteRegistry',
@@ -19,17 +18,20 @@ define([
 		//	* no widget with provided id - should return undefined
 		//	* widget found - should return a RemoteWidget
 		byId: function () {
-			return this.remote.get(DIALOG_TEST_URL).then(function () {
+			return this.remote.get(TEST_URL).then(function () {
 				return registry.byId('dialog1');
 			}).then(function (dialog1) {
-				// XXX: intern is broken https://github.com/theintern/intern/pull/93
-				assert(dialog1 instanceof RemoteWidget, 'registry should return RemoteWidget');
-				// TODO: assertions
+				assert('domNode' in dialog1, 'registry.byId should return RemoteWidget');
 			});
 		},
 
 		byNode: function () {
-			assert(false, 'Test Not Implemented');
+			return this.remote.get(TEST_URL)
+				.elementByCssSelector('[widgetid=dialog1]').then(function (node) {
+					return registry.byNode(node);
+				}).then(function (dialog1) {
+					assert('domNode' in dialog1, 'registry.byNode should return RemoteWidget');
+				});
 		},
 
 		findWidgets: function () {
