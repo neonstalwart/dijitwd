@@ -1,8 +1,9 @@
 define([
 	'intern!object',
 	'intern/chai!assert',
-	'../../lib/RemoteRegistry'
-], function (test, assert, RemoteRegistry) {
+	'../../lib/RemoteRegistry',
+	'../../lib/RemoteWidget'
+], function (test, assert, RemoteRegistry, RemoteWidget) {
 
 	var registry,
 		DIALOG_TEST_URL = 'http://download.dojotoolkit.org/release-1.9.1/dojo-release-1.9.1/dijit/tests/test_Dialog.html';
@@ -19,8 +20,12 @@ define([
 		//	* widget found - should return a RemoteWidget
 		byId: function () {
 			return this.remote.get(DIALOG_TEST_URL).then(function () {
-				return registry.byId('foo');
-			}); // TODO: assertions
+				return registry.byId('dialog1');
+			}).then(function (dialog1) {
+				// XXX: intern is broken https://github.com/theintern/intern/pull/93
+				assert(dialog1 instanceof RemoteWidget, 'registry should return RemoteWidget');
+				// TODO: assertions
+			});
 		},
 
 		byNode: function () {
