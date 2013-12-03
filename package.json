@@ -1,10 +1,10 @@
 {
-	"name": "dijitwd",
+	"name": "dwi",
 	"version": "0.0.0",
-	"description": "Remote dijit via WebDriver",
+	"description": "dijit with intern",
 	"author": "Ben Hockey",
 	"license": "BSD",
 	"devDependencies": {
-		"intern": "git://github.com/theintern/intern.git"
+		"intern": "~1.3"
 	}
 }
